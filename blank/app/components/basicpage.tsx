@@ -122,7 +122,7 @@ function Layout() {
           - Center: Content + Links + CTA
           - Right: Spacing
           ============================================ */}
-      <div className="hidden md:flex lg:hidden flex-row w-full border">
+      <div className="hidden md:flex lg:hidden flex-row w-full">
         
         {/* Left Spacing */}
         <div className="flex flex-1 items-start">
