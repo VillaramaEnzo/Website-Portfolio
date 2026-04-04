@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { ILY_AUTH_COOKIE_NAME, ILY_AUTH_COOKIE_VALUE } from "@/lib/ilyAuth";
+import { ILY_AUTH_COOKIE_NAME, isIlyAuthenticated } from "@/lib/ilyAuth";
 
 export const metadata: Metadata = {
   title: "For My Love",
@@ -13,8 +13,9 @@ export const metadata: Metadata = {
 
 export default async function IlyPage() {
   const cookieStore = await cookies();
-  const isAuthenticated =
-    cookieStore.get(ILY_AUTH_COOKIE_NAME)?.value === ILY_AUTH_COOKIE_VALUE;
+  const isAuthenticated = isIlyAuthenticated(
+    cookieStore.get(ILY_AUTH_COOKIE_NAME)?.value,
+  );
 
   if (!isAuthenticated) {
     redirect("/ily/login");
@@ -25,7 +26,7 @@ export default async function IlyPage() {
       <section className="max-w-2xl">
         <h1 className="text-5xl sm:text-6xl font-light mb-6">I Love You</h1>
         <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300">
-          Happy birthday, my love. This little corner of the internet is just
+          Happy birthday, my love! This little corner of the internet is just
           for you.
         </p>
       </section>

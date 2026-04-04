@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import {
+  getIlyAuthCookieOptions,
   getIlyPasswordFromEnv,
-  ILY_AUTH_COOKIE_NAME,
-  ILY_AUTH_COOKIE_VALUE,
 } from "@/lib/ilyAuth";
 
 function sanitizeNextPath(pathname: FormDataEntryValue | null): string {
@@ -48,15 +47,7 @@ export async function POST(request: Request) {
   }
 
   const response = NextResponse.redirect(new URL(nextPath, request.url));
-  response.cookies.set({
-    name: ILY_AUTH_COOKIE_NAME,
-    value: ILY_AUTH_COOKIE_VALUE,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  });
+  response.cookies.set(getIlyAuthCookieOptions());
 
   return response;
 }

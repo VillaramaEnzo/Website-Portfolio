@@ -2,11 +2,11 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import {
   ILY_AUTH_COOKIE_NAME,
-  ILY_AUTH_COOKIE_VALUE,
+  isIlyAuthenticated,
   isSafeIlyPath,
 } from "@/lib/ilyAuth";
 
-const PUBLIC_ILY_PATHS = new Set(["/ily/login", "/ily/auth"]);
+const PUBLIC_ILY_PATHS = new Set(["/ily/login", "/ily/auth", "/ily/unlock"]);
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -15,8 +15,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const isAuthenticated =
-    request.cookies.get(ILY_AUTH_COOKIE_NAME)?.value === ILY_AUTH_COOKIE_VALUE;
+  const isAuthenticated = isIlyAuthenticated(
+    request.cookies.get(ILY_AUTH_COOKIE_NAME)?.value,
+  );
 
   if (isAuthenticated) {
     return NextResponse.next();

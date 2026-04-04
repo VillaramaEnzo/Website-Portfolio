@@ -5,6 +5,7 @@ type LoginPageProps = {
     error?: string;
     config?: string;
     next?: string;
+    qr?: string;
   }>;
 };
 
@@ -32,6 +33,7 @@ export default async function IlyLoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
   const showError = params.error === "1";
   const showConfigError = params.config === "1";
+  const showQrError = params.qr === "invalid" || params.qr === "expired";
   const nextPath = sanitizeNextPath(params.next);
 
   return (
@@ -45,6 +47,13 @@ export default async function IlyLoginPage({ searchParams }: LoginPageProps) {
         {showError ? (
           <p className="text-sm text-red-600 mb-4">
             Incorrect password. Please try again.
+          </p>
+        ) : null}
+
+        {showQrError ? (
+          <p className="text-sm text-red-600 mb-4">
+            QR unlock link is invalid or expired. You can still use password
+            login.
           </p>
         ) : null}
 

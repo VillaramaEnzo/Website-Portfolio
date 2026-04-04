@@ -2,17 +2,29 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Secret `/ily` Page Setup
 
-The `/ily` route is password-protected.
+The `/ily` route supports password login and QR unlock.
 
-1. Create or edit `.env.local` and add a password:
+1. Create or edit `.env.local` and add:
 
 ```bash
 ILY_PAGE_PASSWORD=your-secret-password-here
+ILY_QR_SIGNING_SECRET=replace-with-a-long-random-secret
+# Optional (defaults to 1209600 = 14 days)
+# ILY_QR_TTL_SECONDS=1209600
 ```
 
 2. Start the app and visit `/ily`.
    - If not authenticated, you will be redirected to `/ily/login`.
-   - Enter the password to unlock the page.
+   - Enter the password to unlock the page (backup access).
+
+3. Generate a QR unlock URL:
+   - Open `/ily/qr-link` while running locally.
+   - Copy the generated unlock URL.
+   - Paste that URL into any QR generator to create a scannable QR code.
+
+4. Share/print the QR code.
+   - Scanning the QR opens `/ily/unlock?token=...`, validates the signed token, sets the auth cookie, and redirects to `/ily`.
+   - If a token is invalid or expired, users are sent to `/ily/login`.
 
 ## Getting Started
 
