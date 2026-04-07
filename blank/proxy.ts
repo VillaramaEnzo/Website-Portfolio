@@ -8,7 +8,7 @@ import {
 
 const PUBLIC_ILY_PATHS = new Set(["/ily/login", "/ily/auth", "/ily/unlock"]);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (!isSafeIlyPath(pathname) || PUBLIC_ILY_PATHS.has(pathname)) {
