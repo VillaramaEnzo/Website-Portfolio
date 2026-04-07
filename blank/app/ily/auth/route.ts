@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getIlyAuthCookieOptions } from "@/lib/ilyAuth";
+import { getIlyAuthCookieOptions, isIlyPageEnabledServer } from "@/lib/ilyAuth";
 import { getIlyPasswordFromEnv } from "@/lib/ilyAuth.server";
 
 export const runtime = "nodejs";
@@ -29,6 +29,10 @@ function redirectWithParams(
 }
 
 export async function POST(request: Request) {
+  if (!isIlyPageEnabledServer()) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   const formData = await request.formData();
   const submittedPassword = formData.get("password");
   const nextPath = sanitizeNextPath(formData.get("next"));

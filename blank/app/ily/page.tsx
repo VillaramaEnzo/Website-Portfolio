@@ -1,7 +1,11 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { ILY_AUTH_COOKIE_NAME, isIlyAuthenticated } from "@/lib/ilyAuth";
+import {
+  ILY_AUTH_COOKIE_NAME,
+  isIlyAuthenticated,
+  isIlyPageEnabledServer,
+} from "@/lib/ilyAuth";
 
 export const metadata: Metadata = {
   title: "For My Love",
@@ -12,6 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default async function IlyPage() {
+  if (!isIlyPageEnabledServer()) {
+    redirect("/");
+  }
+
   const cookieStore = await cookies();
   const isAuthenticated = isIlyAuthenticated(
     cookieStore.get(ILY_AUTH_COOKIE_NAME)?.value,

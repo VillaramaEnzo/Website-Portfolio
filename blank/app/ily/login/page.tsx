@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isIlyPageEnabledServer } from "@/lib/ilyAuth";
 
 type LoginPageProps = {
   searchParams: Promise<{
@@ -30,6 +32,10 @@ function sanitizeNextPath(pathname: string | undefined): string {
 }
 
 export default async function IlyLoginPage({ searchParams }: LoginPageProps) {
+  if (!isIlyPageEnabledServer()) {
+    redirect("/");
+  }
+
   const params = await searchParams;
   const showError = params.error === "1";
   const showConfigError = params.config === "1";

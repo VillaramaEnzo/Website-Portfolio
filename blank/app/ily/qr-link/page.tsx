@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isIlyPageEnabledServer } from "@/lib/ilyAuth";
 import { createIlyQrUnlockToken } from "@/lib/ilyAuth.server";
 
 export const metadata: Metadata = {
@@ -27,6 +29,10 @@ function getSiteOrigin() {
 }
 
 export default function IlyQrLinkPage() {
+  if (!isIlyPageEnabledServer()) {
+    redirect("/");
+  }
+
   const token = createIlyQrUnlockToken();
   if (!token) {
     return (

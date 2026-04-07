@@ -7,6 +7,10 @@ The `/ily` route supports password login and QR unlock.
 1. Create or edit `.env.local` and add:
 
 ```bash
+# Feature toggle (set both the same value)
+ILY_PAGE_ENABLED=true
+NEXT_PUBLIC_ILY_PAGE_ENABLED=true
+
 ILY_PAGE_PASSWORD=your-secret-password-here
 ILY_QR_SIGNING_SECRET=replace-with-a-long-random-secret
 # Optional (defaults to 1209600 = 14 days)
@@ -14,6 +18,8 @@ ILY_QR_SIGNING_SECRET=replace-with-a-long-random-secret
 ```
 
 2. Start the app and visit `/ily`.
+   - If `ILY_PAGE_ENABLED` is `false`, any `/ily` route redirects to `/`.
+   - Set `NEXT_PUBLIC_ILY_PAGE_ENABLED=false` too, so CommandCenter hides `/ily`.
    - If not authenticated, you will be redirected to `/ily/login`.
    - Enter the password to unlock the page (backup access).
 

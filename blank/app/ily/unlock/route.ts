@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getIlyAuthCookieOptions } from "@/lib/ilyAuth";
+import { getIlyAuthCookieOptions, isIlyPageEnabledServer } from "@/lib/ilyAuth";
 import { verifyIlyQrUnlockToken } from "@/lib/ilyAuth.server";
 
 export const runtime = "nodejs";
@@ -12,6 +12,10 @@ function redirectToLogin(requestUrl: string, qrStatus: "invalid" | "expired" = "
 }
 
 export async function GET(request: Request) {
+  if (!isIlyPageEnabledServer()) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   const requestUrl = new URL(request.url);
   const token = requestUrl.searchParams.get("token");
   const isValid = verifyIlyQrUnlockToken(token);
