@@ -267,6 +267,12 @@ export function useCommandCenter() {
         } else {
           handled = handleNavigate(trimmedInput);
         }
+
+        // For route-like inputs, do not fall back to search. Close gracefully if invalid.
+        if (!handled) {
+          resetCommandCenter();
+        }
+        return;
       } else {
         if (codeSuggestions.length > 0 && selectedIndex < codeSuggestions.length) {
           handled = handlePublicCode(codeSuggestions[selectedIndex].code);

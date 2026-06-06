@@ -100,8 +100,8 @@ export default function CommandCenter() {
                       <p>No matching route found.</p>
                       <p className="text-xs mt-1">
                         Try <span className="font-mono">/</span>,{" "}
-                        <span className="font-mono">/portfolio</span>, or{" "}
-                        <span className="font-mono">/ily</span>.
+                        <span className="font-mono">/portfolio</span>, or a full secret route path
+                        like <span className="font-mono">/ily</span> (if enabled).
                       </p>
                     </div>
                   )
