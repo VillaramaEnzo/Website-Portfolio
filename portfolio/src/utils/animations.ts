@@ -281,7 +281,7 @@ export const components = {
       transition: transitions.textFade,
     },
     dots: {
-      opacity: [0, 1],
+      opacity: [0, 1] as number[],
       transition: {
         duration: 0.5,
         repeat: Infinity,
