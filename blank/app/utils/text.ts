@@ -78,7 +78,7 @@ export const homePageContent = {
       },
       {text: "I’m interested in the space between ideas and execution — where things are built, shaped, and defined through process."},
       {
-        text: "I live in Auckland, New Zealand. You can keep up with me on ",
+        text: "I grew up in New Zealand and am currently based in Manila, Philippines. You can keep up with me on ",
         link: { text: "Instagram", href: `https://www.instagram.com/___e_vil` },
         textAfter: " or feel free to send me an ",
         link2: { text: "Email", href: `mailto:${email}` },
